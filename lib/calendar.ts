@@ -1,3 +1,5 @@
+import { NOTIFY_EMAIL } from "./notify";
+
 export function localDateString(date: Date): string {
   return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, "0"), String(date.getDate()).padStart(2, "0")].join("-");
 }
@@ -36,5 +38,7 @@ export function buildCalendarUrl(date: string, time: string, location: string, n
     details: "You said yes! One little date and a very big smile. Can't wait to spend some time with you. 💌",
   });
   if (location.trim()) params.set("location", location.trim());
+  // Adds you as a guest, so saving the event can send you a calendar invite.
+  params.set("add", NOTIFY_EMAIL);
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }

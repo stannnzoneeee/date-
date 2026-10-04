@@ -6,7 +6,7 @@ A single-page Next.js date invitation, styled as a cream postcard with an airmai
 - Nine locally served bear GIFs, including the original four and five additional reactions from the design reference.
 - A different opening GIF on phones. **No** changes the reaction and moves inside the visible postcard; desktop hover also makes it dodge after the first click. Keyboard activation works, and reduced motion keeps the button still.
 - **Yes!!!** reveals date cards for the upcoming Saturday and Sunday, plus a visible **Choose your own date** option. Choosing that third card opens a date picker for her preferred day and remembers it when switching between options. A collapsible section lets you change the time or location.
-- **Add to Google Calendar** opens a prefilled seven-hour event (10 AM to 5 PM by default) using the chosen date, local time, and optional location. The visitor reviews it and presses **Save** in Google Calendar. It does not automatically send an invitation or add an event to anyone else's calendar.
+- **Add to Google Calendar** opens a prefilled seven-hour event (10 AM to 5 PM by default) using the chosen date, local time, and optional location. The visitor reviews it and presses **Save** in Google Calendar. The event lists the address in `lib/notify.ts` as a guest, and tapping the button also emails that address the chosen plan through [FormSubmit](https://formsubmit.co). The first FormSubmit email is an activation link, so send yourself a test date once before sharing the page.
 - GIFs and fonts are served locally. Reduced-motion preferences use still images.
 - No WhatsApp, Firebase, accounts, admin dashboard, analytics, or page builder.
 

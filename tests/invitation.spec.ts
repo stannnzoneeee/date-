@@ -72,8 +72,13 @@ test("date cards select a weekend and a custom plan opens the correct calendar e
   await page.getByLabel("Our time").fill("23:30");
   await page.getByLabel("Our spot").fill("Café & ice cream + a walk");
   await context.route("https://calendar.google.com/**", (route) => route.fulfill({ status: 200, contentType: "text/html", body: "<title>Calendar preview</title>" }));
+  await page.route("https://formsubmit.co/**", (route) => route.fulfill({ status: 200, contentType: "application/json", body: '{"success":"true"}' }));
+  const notifyPromise = page.waitForRequest("https://formsubmit.co/ajax/stanly16tomas@gmail.com");
   const popupPromise = page.waitForEvent("popup");
   await calendarButton.click();
+  const notify = (await notifyPromise).postDataJSON();
+  expect(notify).toMatchObject({ date: "Tuesday, December 31", place: "Café & ice cream + a walk" });
+  expect(notify.time).toMatch(/^11:30\sPM – 6:30\sAM$/);
   const calendar = await popupPromise;
   await calendar.waitForLoadState();
   const url = new URL(calendar.url());
@@ -82,6 +87,7 @@ test("date cards select a weekend and a custom plan opens the correct calendar e
   expect(url.searchParams.get("dates")).toBe("20301231T153000Z/20301231T223000Z");
   expect(url.searchParams.get("location")).toBe("Café & ice cream + a walk");
   expect(url.searchParams.get("text")).toBe("It's a date! 💕");
+  expect(url.searchParams.get("add")).toBe("stanly16tomas@gmail.com");
   expect(await calendar.evaluate(() => window.opener)).toBeNull();
   await calendar.close();
   await expect(page.locator(".confirmation")).toContainText("Tuesday, December 31");

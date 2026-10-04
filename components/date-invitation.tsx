@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import { DATE_HOURS, buildCalendarUrl, localDateString, upcomingWeekend, type DateChoice } from "@/lib/calendar";
+import { notifyDatePicked } from "@/lib/notify";
 import { reactions } from "@/lib/reactions";
 
 function ReactionGif({ accepted, noCount }: { accepted: boolean; noCount: number }) {
@@ -122,6 +123,7 @@ export default function DateInvitation() {
     if (!url) { setError("Pick a future date and time — our time machine is still in the shop."); return; }
     setError("");
     window.open(url, "_blank", "noopener,noreferrer");
+    notifyDatePicked({ date: chosenDate, time: chosenTime, place: location.trim() || "Just us two" });
     setCalendarUrl(url);
   }
 
