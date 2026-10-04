@@ -6,7 +6,7 @@ A single-page Next.js date invitation, styled as a cream postcard with an airmai
 - Nine locally served bear GIFs, including the original four and five additional reactions from the design reference.
 - A different opening GIF on phones. **No** changes the reaction and moves inside the visible postcard; desktop hover also makes it dodge after the first click. Keyboard activation works, and reduced motion keeps the button still.
 - **Yes!!!** reveals date cards for the upcoming Saturday and Sunday, plus a visible **Choose your own date** option. Choosing that third card opens a date picker for her preferred day and remembers it when switching between options. A collapsible section lets you change the time or location.
-- **Add to Google Calendar** opens a prefilled two-hour event using the chosen date, local time, and optional location. The visitor reviews it and presses **Save** in Google Calendar. It does not automatically send an invitation or add an event to anyone else's calendar.
+- **Add to Google Calendar** opens a prefilled seven-hour event (10 AM to 5 PM by default) using the chosen date, local time, and optional location. The visitor reviews it and presses **Save** in Google Calendar. It does not automatically send an invitation or add an event to anyone else's calendar.
 - GIFs and fonts are served locally. Reduced-motion preferences use still images.
 - No WhatsApp, Firebase, accounts, admin dashboard, analytics, or page builder.
 
@@ -31,11 +31,11 @@ Only `/` is an application page. Old `/landing`, `/create`, `/manage`, `/admin`,
 
 - Invitation text and interactions: `components/date-invitation.tsx`.
 - GIF reactions, captions, and No button labels: `lib/reactions.ts`.
-- Event title, description, and two-hour duration: `lib/calendar.ts`.
+- Event title, description, and seven-hour duration: `lib/calendar.ts`.
 - Colors, typography, and responsive layout: `app/globals.css`.
 - Animated and still assets: `public/gifs/`.
 
-The two suggested days are the upcoming weekend, with a default time of 6 PM in the visitor's timezone. Choose a day before the calendar button becomes available. The submitted date and time are converted to UTC for Google Calendar, including timezone offsets and daylight-saving changes. The confirmation summarizes the chosen plan and reminds the visitor to press Save in Google Calendar; it does not claim that the event was automatically saved.
+The two suggested days are the upcoming weekend, with a default time of 10 AM to 5 PM in the visitor's timezone. Choose a day before the calendar button becomes available. The submitted date and time are converted to UTC for Google Calendar, including timezone offsets and daylight-saving changes. The confirmation summarizes the chosen plan and reminds the visitor to press Save in Google Calendar; it does not claim that the event was automatically saved.
 
 ## Check the build
 

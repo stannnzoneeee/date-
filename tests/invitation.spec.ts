@@ -55,6 +55,7 @@ test("date cards select a weekend and a custom plan opens the correct calendar e
   await saturday.check();
   await expect(saturday).toBeChecked();
   await expect(calendarButton).toBeEnabled();
+  await expect(page.locator("#calendar-hint")).toHaveText(/^10:00\sAM – 5:00\sPM · your local time$/);
   await saturday.press("ArrowRight");
   await expect(sunday).toBeChecked();
   await page.screenshot({ path: test.info().outputPath("date-cards.png"), fullPage: true });
@@ -78,7 +79,7 @@ test("date cards select a weekend and a custom plan opens the correct calendar e
   const url = new URL(calendar.url());
   expect(url.origin).toBe("https://calendar.google.com");
   expect(url.searchParams.get("action")).toBe("TEMPLATE");
-  expect(url.searchParams.get("dates")).toBe("20301231T153000Z/20301231T173000Z");
+  expect(url.searchParams.get("dates")).toBe("20301231T153000Z/20301231T223000Z");
   expect(url.searchParams.get("location")).toBe("Café & ice cream + a walk");
   expect(url.searchParams.get("text")).toBe("It's a date! 💕");
   expect(await calendar.evaluate(() => window.opener)).toBeNull();

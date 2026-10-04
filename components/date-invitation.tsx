@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
-import { buildCalendarUrl, localDateString, upcomingWeekend, type DateChoice } from "@/lib/calendar";
+import { DATE_HOURS, buildCalendarUrl, localDateString, upcomingWeekend, type DateChoice } from "@/lib/calendar";
 import { reactions } from "@/lib/reactions";
 
 function ReactionGif({ accepted, noCount }: { accepted: boolean; noCount: number }) {
@@ -48,7 +48,7 @@ export default function DateInvitation() {
   const [date, setDate] = useState("");
   const [customDate, setCustomDate] = useState(false);
   const [preferredDate, setPreferredDate] = useState("");
-  const [time, setTime] = useState("18:00");
+  const [time, setTime] = useState("10:00");
   const [location, setLocation] = useState("");
   const [calendarUrl, setCalendarUrl] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -135,7 +135,9 @@ export default function DateInvitation() {
   }
 
   const chosenDate = date ? new Date(`${date}T12:00:00`).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }) : "";
-  const chosenTime = time ? new Date(`2000-01-01T${time}:00`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) : "";
+  const timeLabel = (value: Date) => value.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  const startTime = new Date(`2000-01-01T${time}:00`);
+  const chosenTime = time ? `${timeLabel(startTime)} – ${timeLabel(new Date(startTime.getTime() + DATE_HOURS * 60 * 60 * 1000))}` : "";
 
   return (
     <main className="page">

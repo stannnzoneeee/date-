@@ -2,6 +2,9 @@ export function localDateString(date: Date): string {
   return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, "0"), String(date.getDate()).padStart(2, "0")].join("-");
 }
 
+// The default 10 AM start runs until 5 PM.
+export const DATE_HOURS = 7;
+
 export type DateChoice = { value: string; day: string; label: string };
 
 export function upcomingWeekend(now = new Date()): DateChoice[] {
@@ -24,7 +27,7 @@ export function buildCalendarUrl(date: string, time: string, location: string, n
   if (!Number.isFinite(start.getTime()) || start <= now) return null;
   if (localDateString(start) !== date || `${String(start.getHours()).padStart(2, "0")}:${String(start.getMinutes()).padStart(2, "0")}` !== time) return null;
 
-  const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+  const end = new Date(start.getTime() + DATE_HOURS * 60 * 60 * 1000);
   const timestamp = (value: Date) => value.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
   const params = new URLSearchParams({
     action: "TEMPLATE",
