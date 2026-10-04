@@ -1,17 +1,7 @@
 {
-  "rewrites": [
-    { "source": "/landing", "destination": "/landing.html" },
-    { "source": "/create", "destination": "/create.html" },
-    { "source": "/manage", "destination": "/create.html" },
-    { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/:slug(d-[a-z0-9]+)", "destination": "/date.html?slug=:slug" }
-  ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-store" }
-      ]
-    }
-  ]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next"
 }

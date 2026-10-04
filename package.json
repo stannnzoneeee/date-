@@ -2,11 +2,27 @@
   "name": "asking-for-a-date-from-your-crush",
   "private": true,
   "version": "1.0.0",
-  "description": "Create playful, personalized date invitation pages.",
+  "description": "A single-page date invitation with playful GIFs and Google Calendar.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test"
+  },
   "engines": {
-    "node": ">=22"
+    "node": "22.x"
   },
   "dependencies": {
-    "firebase-admin": "^14.4.0"
+    "next": "16.3.8",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
   }
 }

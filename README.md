@@ -1,76 +1,51 @@
-# Asking for a Date with a crush using an automated message sent on WhatsApp 💘
+# A little question for you 💌
 
-This is a repo for making a Website using HTML, CSS, and JavaScript that allows users to ask their crush for a Date! and a custom message is sent to your crush automatically using JavaScript.
+A single-page Next.js date invitation, styled as a cream postcard with an airmail border. The entire experience lives at `/`.
 
-# Disclaimer ⚠️
-We cannot guarantee that this landing page will result in a successful date or relationship. Use at your own risk (but hey, at least you tried, right?).
+- Matches the supplied design: Gloock and Nunito Sans typography, a tilted postage stamp, date cards, and a dashed confirmation note.
+- Nine locally served bear GIFs, including the original four and five additional reactions from the design reference.
+- A different opening GIF on phones. **No** changes the reaction and moves inside the visible postcard; desktop hover also makes it dodge after the first click. Keyboard activation works, and reduced motion keeps the button still.
+- **Yes!!!** reveals date cards for the upcoming Saturday and Sunday, plus a visible **Choose your own date** option. Choosing that third card opens a date picker for her preferred day and remembers it when switching between options. A collapsible section lets you change the time or location.
+- **Add to Google Calendar** opens a prefilled two-hour event using the chosen date, local time, and optional location. The visitor reviews it and presses **Save** in Google Calendar. It does not automatically send an invitation or add an event to anyone else's calendar.
+- GIFs and fonts are served locally. Reduced-motion preferences use still images.
+- No WhatsApp, Firebase, accounts, admin dashboard, analytics, or page builder.
 
-## Use it without touching code
+## Run locally
 
-You do not need to edit `index.html`, change JavaScript, or replace a phone number manually anymore.
-
-1. Open the live [Ask Your Crush landing page](https://asking-for-a-date-from-your-crush.vercel.app/landing).
-2. Choose **Create yours**.
-3. Fill in your own question, button labels, celebration message, and **your WhatsApp number**.
-4. Click **Save & create link**.
-5. Copy your unique `/d-...` link and send it to your crush.
-
-The home page at [asking-for-a-date-from-your-crush.vercel.app](https://asking-for-a-date-from-your-crush.vercel.app/) is still the original playable example. Your custom pages are created from the builder and can be edited or deleted from the same browser. Two links are free; additional links will be part of a paid plan currently under development.
-
-## Installation for developers
-
-Clone the repository and install the server dependency:
+Use Node.js 22:
 
 ```bash
-npm install
+npm ci
+npm run dev
 ```
 
-Run it as a Vercel project, configure the Firebase Admin variables from `.env.example`, and deploy the Firestore rules before using the builder. Opening `index.html` directly is only useful for viewing the static example; the creator dashboard and generated links need the Vercel API and Firestore.
+Open http://localhost:3000.
 
-## Customize everything yourself
+## Deploy to Vercel
 
-If you are a developer and want full control, edit the HTML, CSS, and JavaScript directly. The original example lives in `index.html`; the landing page, builder, generated page, API routes, and styling are separated into their own files. Please keep the server-only Firebase private key out of client-side code and out of Git.
+Import this repository into Vercel and deploy. `vercel.json` specifies the **Next.js** framework, `npm ci`, `npm run build`, and the `.next` output directory. No environment variables or database are required. For an existing Vercel project, remove any old static-site build overrides and use the repository root as the Root Directory.
 
-## Contributing
+Only `/` is an application page. Old `/landing`, `/create`, `/manage`, `/admin`, `/date`, their `.html` versions, `/index.html`, and `/d-...` links redirect to `/`. Old API endpoints and unrelated paths return 404. This project is configured for deployment; running the local build does not publish it.
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening an issue or pull request. For anything beyond a small documentation or typo fix, open an issue first and wait for the proposal to be acknowledged. Pull requests without enough context, testing details, or a related issue may be closed and asked to be resubmitted.
+## Customize
 
-Please also review the [Code of Conduct](CODE_OF_CONDUCT.md), [Security Policy](SECURITY.md), and [MIT License](LICENSE).
+- Invitation text and interactions: `components/date-invitation.tsx`.
+- GIF reactions, captions, and No button labels: `lib/reactions.ts`.
+- Event title, description, and two-hour duration: `lib/calendar.ts`.
+- Colors, typography, and responsive layout: `app/globals.css`.
+- Animated and still assets: `public/gifs/`.
 
-## Create personalized date pages
+The two suggested days are the upcoming weekend, with a default time of 6 PM in the visitor's timezone. Choose a day before the calendar button becomes available. The submitted date and time are converted to UTC for Google Calendar, including timezone offsets and daylight-saving changes. The confirmation summarizes the chosen plan and reminds the visitor to press Save in Google Calendar; it does not claim that the event was automatically saved.
 
-- Landing page: `/landing`
-- Date page builder and creator dashboard: `/create`
-- Generated public links use the `/d-xxxxxxxxxx` format.
+## Check the build
 
-The builder allows two free links per browser creator. The creator cookie is `HttpOnly` and is checked server-side for listing, editing, and deleting links. Generated links remain publicly readable so the person receiving a link can open it without an account.
+```bash
+npm run build
+npm run typecheck
+npx playwright install chromium webkit
+npm test
+```
 
-### Firebase and Vercel setup
+The browser tests cover desktop and phone interactions, calendar details, time validation, reduced motion, asset failures, and removal of the old routes. `npm test` runs against a production build, so build first.
 
-The API uses the Firebase Admin SDK, so the service-account credentials must never be placed in client-side JavaScript. Copy `.env.example` to `.env` for local development, or add these variables to Vercel Project Settings → Environment Variables:
-
-- `FIREBASE_PROJECT_ID`
-- `FIREBASE_CLIENT_EMAIL`
-- `FIREBASE_PRIVATE_KEY`
-- `ADMIN_USERNAME`
-- `ADMIN_PASSWORD`
-- `ADMIN_SESSION_SECRET`
-
-Deploy `firestore.rules` before using the builder. The rules intentionally deny direct browser access; the Vercel API uses the Admin SDK on the server.
-
-### Private admin dashboard
-
-The owner dashboard is available at `/admin`. It requires the username and password configured in Vercel and uses a signed, `HttpOnly` session cookie. It shows saved creator data, links, page views, Yes clicks, WhatsApp clicks, daily activity, and quick link removal controls. Never put the admin credentials in frontend files or commit them to Git.
-
-![Date6](https://github.com/Ganesh-Sharmaz/Date/assets/151487165/6072ce08-9e9a-4d60-8adc-1eb5e86ac17c)
-
-
-## How it looks
-
-![Date1](https://github.com/Ganesh-Sharmaz/Date/assets/151487165/4547e047-7f0c-48df-be03-73caa61a07b2)
-
-![Date2](https://github.com/Ganesh-Sharmaz/Date/assets/151487165/bb595cc7-09ac-4591-889c-649a6a87b568)
-
-![Date3](https://github.com/Ganesh-Sharmaz/Date/assets/151487165/b42335c2-eefd-46db-958a-a0deea2550be)
-
-
+Framework setup follows the [Next.js installation guide](https://nextjs.org/docs/app/getting-started/installation). See [THIRD_PARTY_ASSETS.md](THIRD_PARTY_ASSETS.md) for media sources and font licenses.
