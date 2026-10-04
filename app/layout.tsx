@@ -18,7 +18,6 @@ export const metadata: Metadata = {
     title: "A little question for you 💌",
     description: "Special delivery. Just for you.",
     type: "website",
-    url: "/",
   },
   twitter: { card: "summary_large_image" },
 };
